@@ -249,6 +249,16 @@ impl pallet_balances::Config for Runtime {
 	type MaxHolds = ();
 }
 
+impl pallet_nicks::Config for Runtime {
+	type Currency = Balances;
+	type ReservationFee = ConstU128<100>;
+	type Slashed = ();
+	type ForceOrigin = frame_system::EnsureRoot<AccountId>;
+	type MinLength = ConstU32<8>;
+	type MaxLength = ConstU32<32>;
+	type RuntimeEvent = RuntimeEvent;
+}
+
 parameter_types! {
 	pub FeeMultiplier: Multiplier = Multiplier::one();
 }
@@ -286,6 +296,7 @@ construct_runtime!(
 		Aura: pallet_aura,
 		Grandpa: pallet_grandpa,
 		Balances: pallet_balances,
+		Nicks: pallet_nicks,
 		TransactionPayment: pallet_transaction_payment,
 		Sudo: pallet_sudo,
 		// Include the custom logic from the pallet-template in the runtime.
